@@ -6,23 +6,27 @@ import EditForm from "./EditForm.jsx";
 
 function App() {
 
-    const [todos, setTodos] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
-
     const [editingId, setEditingId] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
+    const [result, setResult] = useState({page: 0, todos: [], error: null});
 
+    const loading = result.page !== page;
+    const error = result.page === page ? result.error : null;
+    const todos = loading ? [] : result.todos;
+    const editing = todos.find(t => t.id === editingId);
 
     useEffect(() => {
-        setLoading(true);
-        setError(null);
+        let cancelled = false;
         axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=10&_page=${page}`)
-            .then(res => setTodos(res.data))
-            .catch(error => setError(error))
-            .finally(() => setLoading(false));
+            .then(res => {
+                if (!cancelled) setResult({page, todos: res.data, error: null})
+            })
+            .catch(error => {
+                if (!cancelled) setResult({page, todos: [], error})
+            });
+        return () => {
+            cancelled = true
+        };
     }, [page]);
 
     function openForm(todo) {
@@ -30,14 +34,12 @@ function App() {
     }
 
     function saveEdit(updated) {
-        setTodos(todos.map(t => t.id === updated.id ? updated : t));
+        setResult({...result, todos: result.todos.map(t => t.id === updated.id ? updated : t)});
         setEditingId(null);
     }
 
-    const editing = todos.find(t => t.id === editingId);
-
     return (<main className="app">
-            <h1 className="margin">Todos</h1>
+        <h1 className="margin">Todos</h1>
 
         {loading && <p className="status">Loading todos...</p>}
 
@@ -58,23 +60,22 @@ function App() {
                 </thead>
                 <tbody>
                 {todos.map(todo => (<tr key={todo.id}>
-                        <td>{todo.title}</td>
-                        <td>
+                    <td>{todo.title}</td>
+                    <td>
                 <span
                     className={`badge ${todo.completed ? "badge--done" : "badge--open"}`}
                 >
                   {todo.completed ? "Completed" : "Not Completed"}
                 </span>
-                        </td>
-                        <td className="table__actions">
-                            <button className="btn btn--ghost" onClick={() => openForm(todo)}>Edit</button>
-                            <button className="btn btn--danger" onClick={() => alert(`Delete todo ${todo.id}`)}>Delete
-                            </button>
-                        </td>
-                    </tr>))}
+                    </td>
+                    <td className="table__actions">
+                        <button className="btn btn--ghost" onClick={() => openForm(todo)}>Edit</button>
+                        <button className="btn btn--danger" onClick={() => alert(`Delete todo ${todo.id}`)}>Delete
+                        </button>
+                    </td>
+                </tr>))}
                 </tbody>
             </table>
-
             {editing && <EditForm todo={editing} onSave={saveEdit} onCancel={() => setEditingId(null)}/>}
 
             <div className="pagination">
