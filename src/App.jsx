@@ -22,6 +22,11 @@ function App() {
         setEditing(todo);
     }
 
+    function saveEdit() {
+        setTodos(todos.map(t => t.id === editing.id ? editing : t));
+        setEditing(null);
+    }
+
     return (<main className="app">
             <h1 className="margin">Todos</h1>
 
@@ -54,11 +59,15 @@ function App() {
                 </tbody>
             </table>
 
-            {editing && <>
-                <input className="input" type="text" value={editing.title}
-                       onChange={(e) => setEditing({...editing, title: e.target.value})}/>
-                <button className="btn btn--danger">Save</button>
-            </>}
+            {editing && <form className="editor" onSubmit={e => {e.preventDefault(); saveEdit();}}>
+                <label className="editor__label" htmlFor="todo-title">Edit task</label>
+                <div className="editor__row">
+                    <input id="todo-title" className="input" type="text" value={editing.title}
+                           onChange={(e) => setEditing({...editing, title: e.target.value})}/>
+                    <button className="btn btn--primary" type="submit">Save</button>
+                    <button className="btn btn--ghost" type="button" onClick={() => setEditing(null)}>Cancel</button>
+                </div>
+            </form>}
         </main>)
 }
 

@@ -159,6 +159,66 @@
   }
 }
 
+/* ---------- Primary button ---------- */
+
+.btn--primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: transparent;
+}
+
+.btn--primary:hover {
+  background: color-mix(in srgb, var(--accent) 85%, #000);
+}
+
+/* ---------- Edit form ---------- */
+
+.editor {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--accent-border);
+  border-radius: 12px;
+  background: var(--accent-bg);
+}
+
+.editor__label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.editor__row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 15px;
+  padding: 8px 12px;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.input::placeholder {
+  color: var(--text);
+}
+
 /* ---------- Narrow screens ---------- */
 
 @media (max-width: 640px) {
@@ -177,5 +237,13 @@
 
   .table tbody td:nth-child(2) {
     padding: 0 14px 10px;
+  }
+
+  .editor__row {
+    flex-wrap: wrap;
+  }
+
+  .input {
+    flex-basis: 100%;
   }
 }
