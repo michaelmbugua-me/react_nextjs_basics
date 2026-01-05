@@ -11,12 +11,15 @@ function App() {
     // const [error, setError] = useState(null);
 
     const [editingId, setEditingId] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
 
     useEffect(() => {
         axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
             .then(res => setTodos(res.data))
-            .catch(error => console.error('Error fetching data:', error));
+            .catch(error => setError(error))
+            .finally(() => setLoading(false));
     }, []);
 
     function openForm(todo) {
@@ -33,6 +36,13 @@ function App() {
     return (<main className="app">
             <h1 className="margin">Todos</h1>
 
+        {loading && <p className="status">Loading todos...</p>}
+
+        {!loading && error && <p className="status status--error">
+            Could not load todos. Check your connection and try again.
+        </p>}
+
+        {!loading && !error && <>
             <table className="table">
                 <thead>
                 <tr>
@@ -63,7 +73,8 @@ function App() {
             </table>
 
             {editing && <EditForm todo={editing} onSave={saveEdit} onCancel={() => setEditingId(null)}/>}
-        </main>)
+        </>}
+    </main>)
 }
 
 export default App

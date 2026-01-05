@@ -171,6 +171,24 @@
   background: color-mix(in srgb, var(--accent) 85%, #000);
 }
 
+/* ---------- Status messages ---------- */
+
+.status {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--text);
+}
+
+.status--error {
+  color: #c2334d;
+}
+
+@media (prefers-color-scheme: dark) {
+  .status--error {
+    color: #ff8095;
+  }
+}
+
 /* ---------- Edit form ---------- */
 
 .editor {
