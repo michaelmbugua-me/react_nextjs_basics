@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 
 import './App.css'
 import axios from "axios";
+import EditForm from "./EditForm.jsx";
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
     // const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
 
-    const [editing, setEditing] = useState(null);
+    const [editingId, setEditingId] = useState(null);
 
 
     useEffect(() => {
@@ -19,13 +20,15 @@ function App() {
     }, []);
 
     function openForm(todo) {
-        setEditing(todo);
+        setEditingId(todo.id);
     }
 
-    function saveEdit() {
-        setTodos(todos.map(t => t.id === editing.id ? editing : t));
-        setEditing(null);
+    function saveEdit(updated) {
+        setTodos(todos.map(t => t.id === updated.id ? updated : t));
+        setEditingId(null);
     }
+
+    const editing = todos.find(t => t.id === editingId);
 
     return (<main className="app">
             <h1 className="margin">Todos</h1>
@@ -59,15 +62,7 @@ function App() {
                 </tbody>
             </table>
 
-            {editing && <form className="editor" onSubmit={e => {e.preventDefault(); saveEdit();}}>
-                <label className="editor__label" htmlFor="todo-title">Edit task</label>
-                <div className="editor__row">
-                    <input id="todo-title" className="input" type="text" value={editing.title}
-                           onChange={(e) => setEditing({...editing, title: e.target.value})}/>
-                    <button className="btn btn--primary" type="submit">Save</button>
-                    <button className="btn btn--ghost" type="button" onClick={() => setEditing(null)}>Cancel</button>
-                </div>
-            </form>}
+            {editing && <EditForm todo={editing} onSave={saveEdit} onCancel={() => setEditingId(null)}/>}
         </main>)
 }
 
