@@ -189,6 +189,34 @@
   }
 }
 
+/* ---------- Pagination ---------- */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.pagination__status {
+  font-size: 13px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  min-width: 72px;
+  text-align: center;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background: transparent;
+  border-color: var(--border);
+}
+
 /* ---------- Edit form ---------- */
 
 .editor {

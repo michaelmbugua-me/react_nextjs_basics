@@ -13,14 +13,17 @@ function App() {
     const [editingId, setEditingId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [page, setPage] = useState(1);
 
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+        setLoading(true);
+        setError(null);
+        axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=10&_page=${page}`)
             .then(res => setTodos(res.data))
             .catch(error => setError(error))
             .finally(() => setLoading(false));
-    }, []);
+    }, [page]);
 
     function openForm(todo) {
         setEditingId(todo.id);
@@ -73,6 +76,18 @@ function App() {
             </table>
 
             {editing && <EditForm todo={editing} onSave={saveEdit} onCancel={() => setEditingId(null)}/>}
+
+            <div className="pagination">
+                <button className="btn btn--ghost" disabled={page === 1}
+                        onClick={() => setPage(p => p - 1)}>
+                    Previous
+                </button>
+                <span className="pagination__status">Page {page}</span>
+                <button className="btn btn--ghost" disabled={page === 10}
+                        onClick={() => setPage(p => p + 1)}>
+                    Next
+                </button>
+            </div>
         </>}
     </main>)
 }
