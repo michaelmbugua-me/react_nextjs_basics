@@ -21,22 +21,41 @@ function App() {
   }
 
   return (
-    <>
-      <p>Json Placeholder Items</p>
-        {todos.map(todo => (
+    <main className="app">
+      <h1>Todos</h1>
 
-            <table>
-              <tbody className={"table"}>
-              <tr key={todo.id}>
-                <td>{todo.title}</td>
-                <td>{todo.completed ? "Completed" : "Not Completed"}</td>
-                  <td><button>Edit</button></td>
-                  <td><button>Delete</button></td>
-              </tr>
-              </tbody>
-            </table>
-        ))}
-    </>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Status</th>
+            <th scope="col" className="table__actions-heading">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {todos.map(todo => (
+            <tr key={todo.id}>
+              <td>{todo.title}</td>
+              <td>
+                <span
+                  className={`badge ${
+                    todo.completed ? "badge--done" : "badge--open"
+                  }`}
+                >
+                  {todo.completed ? "Completed" : "Not Completed"}
+                </span>
+              </td>
+              <td className="table__actions">
+                <button className="btn btn--ghost">Edit</button>
+                <button className="btn btn--danger">Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </main>
   )
 }
 

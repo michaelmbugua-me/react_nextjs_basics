@@ -1,0 +1,181 @@
+.app {
+  padding: 48px 32px 80px;
+  text-align: left;
+}
+
+.app h1 {
+  margin: 0 0 4px;
+}
+
+.app > p {
+  margin: 0 0 32px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+/* ---------- Table shell ---------- */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+
+.table th,
+.table td {
+  padding: 14px 20px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table thead th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--code-bg);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.table tbody tr + tr td {
+  border-top: 1px solid var(--border);
+}
+
+.table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.table tbody tr:hover {
+  background: var(--accent-bg);
+}
+
+.table tbody td {
+  color: var(--text-h);
+}
+
+.table__actions-heading,
+.table__actions {
+  text-align: right;
+}
+
+.table__actions {
+  white-space: nowrap;
+}
+
+.table__actions .btn + .btn {
+  margin-left: 8px;
+}
+
+/* ---------- Status badge ---------- */
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.badge--done {
+  color: #0f7a4d;
+  background: rgba(16, 163, 101, 0.12);
+  border-color: rgba(16, 163, 101, 0.28);
+}
+
+.badge--open {
+  color: var(--text);
+  background: var(--social-bg);
+  border-color: var(--border);
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge--done {
+    color: #4ade9a;
+    background: rgba(16, 163, 101, 0.16);
+    border-color: rgba(16, 163, 101, 0.36);
+  }
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 7px 14px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-h);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn--ghost:hover {
+  background: var(--social-bg);
+  border-color: var(--accent-border);
+}
+
+.btn--danger {
+  color: #c2334d;
+  border-color: rgba(194, 51, 77, 0.35);
+}
+
+.btn--danger:hover {
+  color: #fff;
+  background: #c2334d;
+  border-color: #c2334d;
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn--danger {
+    color: #ff8095;
+    border-color: rgba(255, 128, 149, 0.35);
+  }
+
+  .btn--danger:hover {
+    color: #16171d;
+    background: #ff8095;
+    border-color: #ff8095;
+  }
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 640px) {
+  .app {
+    padding: 32px 16px 60px;
+  }
+
+  .table th,
+  .table td {
+    padding: 12px 14px;
+  }
+
+  .table thead th:nth-child(2) {
+    display: none;
+  }
+
+  .table tbody td:nth-child(2) {
+    padding: 0 14px 10px;
+  }
+}
